@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+  <style>
+    body { margin:0; background:#FFFFFF; color:#000000;
+           font-family:'Courier Prime','Courier New',Courier,monospace; }
+    * { box-sizing:border-box; }
+    a { color:#000000; } a:hover { color:#767676; }
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:920px; background:#FFFFFF; padding:52px 56px 46px; display:flex; flex-direction:column;">
+
+  <div style="display:flex; align-items:baseline;">
+    <div style="font-size:19px; font-weight:700; letter-spacing:0.30em;">AUDBRE</div>
+    <div style="flex:1;"></div>
+    <div style="font-size:10.5px; letter-spacing:0.14em; color:#767676;">ENGINE MODAL &nbsp;·&nbsp; SAM-AUDIO-LARGE &nbsp;·&nbsp; A10G</div>
+  </div>
+  <div style="height:2px; background:#000000; margin-top:11px;"></div>
+  <div style="height:1px; background:#000000; margin-top:3px;"></div>
+
+  <div style="display:flex; align-items:baseline; margin-top:26px; font-size:13px;">
+    <span style="font-weight:700; letter-spacing:0.06em;">INTERVIEW-TAKE-3.WAV</span>
+    <span style="flex:1; border-bottom:1px dotted #C9C9C9; margin:0 12px 5px;"></span>
+    <span style="color:#767676; letter-spacing:0.08em;">04:12 &nbsp;·&nbsp; 44.1 kHz &nbsp;·&nbsp; MONO</span>
+  </div>
+
+  <div style="border:1px solid #000000; margin-top:14px; padding:20px 22px 14px; background:#FFFFFF;">
+    <div style="display:flex; align-items:center; gap:1px; height:132px;">
+      <sc-for list="{{bars}}" as="b" hint-placeholder-count="60">
+        <div style="flex:1; height:100%; background:{{b.bg}}; display:flex; align-items:center; justify-content:center;">
+          <div style="width:2px; height:{{b.h}}; background:{{b.c}};"></div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:12px; padding-top:9px; border-top:1px solid #000000; font-size:10px; letter-spacing:0.1em; color:#767676;">
+      <span>00:00</span><span>00:30</span><span>01:00</span><span>01:30</span><span>02:00</span>
+      <span>02:30</span><span>03:00</span><span>03:30</span><span>04:12</span>
+    </div>
+  </div>
+
+  <div style="display:flex; align-items:center; margin-top:14px; font-size:11.5px; letter-spacing:0.08em;">
+    <span style="background:#000000; color:#FFFFFF; padding:3px 9px; font-weight:700;">MARKED</span>
+    <span style="margin-left:12px;">00:34.2 &nbsp;&rarr;&nbsp; 00:36.0</span>
+    <span style="margin-left:12px; color:#767676;">(1.8s)</span>
+    <div style="flex:1;"></div>
+    <span style="color:#767676; text-decoration:underline; text-underline-offset:3px;">CLEAR MARKS</span>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:26px; margin-top:22px;">
+    <div style="border:1px solid #000000; padding:9px 20px; font-size:12px; font-weight:700; letter-spacing:0.14em;">&#9654; PLAY</div>
+    <div style="display:flex; align-items:center; gap:9px;">
+      <span style="font-size:10.5px; letter-spacing:0.14em; color:#767676;">LISTEN TO</span>
+      <span style="background:#000000; color:#FFFFFF; padding:6px 13px; font-size:11px; letter-spacing:0.1em;">CLEANED</span>
+      <span style="border:1px solid #C9C9C9; color:#767676; padding:5px 13px; font-size:11px; letter-spacing:0.1em;">ORIGINAL</span>
+      <span style="border:1px solid #C9C9C9; color:#767676; padding:5px 13px; font-size:11px; letter-spacing:0.1em;">REMOVED SOUND</span>
+    </div>
+  </div>
+
+  <div style="display:flex; align-items:flex-end; gap:18px; margin-top:30px;">
+    <span style="font-size:11px; font-weight:700; letter-spacing:0.16em; padding-bottom:9px;">REMOVE &#9656;</span>
+    <div style="flex:1; border-bottom:1px solid #000000; padding-bottom:8px; display:flex; align-items:center;">
+      <span style="font-size:15px;">dog barking outside</span>
+      <span style="display:inline-block; width:8px; height:16px; background:#000000; margin-left:3px;"></span>
+    </div>
+    <div style="background:#000000; color:#FFFFFF; padding:11px 24px; font-size:12px; font-weight:700; letter-spacing:0.16em;">PREVIEW</div>
+  </div>
+  <div style="font-size:11px; color:#767676; margin-top:11px;">
+    Drag across the waveform to mark when it happens &mdash; that anchors the model to <span style="color:#000000; font-weight:700;">that</span> sound, not every dog in the file.
+  </div>
+
+  <div style="border:1px solid #000000; margin-top:24px;">
+    <div style="background:#000000; color:#FFFFFF; padding:6px 16px; font-size:10.5px; font-weight:700; letter-spacing:0.2em;">FOUND IT</div>
+    <div style="padding:16px 18px 17px; display:flex; align-items:center;">
+      <div>
+        <div style="font-size:14px;">&ldquo;dog barking outside&rdquo;</div>
+        <div style="font-size:11px; color:#767676; margin-top:6px; letter-spacing:0.06em;">2 SPANS &nbsp;·&nbsp; 1.8s OF AUDIO &nbsp;·&nbsp; PEAK 0.34 &nbsp;·&nbsp; 6.2s ON GPU</div>
+      </div>
+      <div style="flex:1;"></div>
+      <div style="display:flex; gap:10px;">
+        <div style="border:1px solid #C9C9C9; color:#767676; padding:9px 18px; font-size:11.5px; letter-spacing:0.14em;">DISCARD</div>
+        <div style="background:#000000; color:#FFFFFF; padding:10px 20px; font-size:11.5px; font-weight:700; letter-spacing:0.14em;">KEEP IT</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;">
+    <div style="display:flex; align-items:baseline;">
+      <span style="font-size:10.5px; font-weight:700; letter-spacing:0.22em;">REMOVAL STACK</span>
+      <span style="flex:1; border-bottom:1px solid #000000; margin:0 12px 4px;"></span>
+      <span style="font-size:10.5px; color:#767676; letter-spacing:0.1em;">2 ACTIVE</span>
+    </div>
+    <div style="display:flex; flex-direction:column; margin-top:4px;">
+      <sc-for list="{{layers}}" as="l" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; padding:11px 2px; border-bottom:1px dotted #C9C9C9; font-size:13px;">
+          <span style="width:30px; color:#C9C9C9; font-size:11px;">{{l.n}}</span>
+          <span style="width:34px; font-weight:700;">{{l.box}}</span>
+          <span style="color:{{l.ink}}; text-decoration:{{l.strike}}; text-decoration-thickness:1px;">{{l.name}}</span>
+          <span style="flex:1; border-bottom:1px dotted #E4E4E4; margin:0 12px 4px;"></span>
+          <span style="color:#767676; font-size:11.5px; letter-spacing:0.06em;">{{l.at}}</span>
+          <span style="width:74px; text-align:right; color:#C9C9C9; font-size:11.5px;">{{l.len}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1280,"height":920}}'>
+class Component extends DCLogic {
+  wave(count, seed, from, to) {
+    let s = seed;
+    const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+    const out = [];
+    for (let i = 0; i < count; i++) {
+      const t = i / count;
+      const speech = 0.30 + 0.42 * Math.abs(Math.sin(t * 13.0)) * (0.6 + 0.4 * Math.sin(t * 3.1));
+      const bark = 0.46 * Math.exp(-Math.pow((t - 0.435) * 30, 2));
+      const h = Math.max(0.05, Math.min(1, (speech + bark) * (0.55 + 0.7 * rnd())));
+      const sel = t >= from && t < to;
+      out.push({
+        h: (h * 100).toFixed(1) + '%',
+        bg: sel ? '#000000' : 'transparent',
+        c: sel ? '#FFFFFF' : '#000000'
+      });
+    }
+    return out;
+  }
+  renderVals() {
+    return {
+      bars: this.wave(168, 7, 0.408, 0.462),
+      layers: [
+        { n: '01', box: '[x]', name: 'chair creak',     at: '00:12.4', len: '1.1s',  ink: '#767676', strike: 'line-through' },
+        { n: '02', box: '[x]', name: 'phone vibration', at: '01:47.0', len: '0.6s',  ink: '#767676', strike: 'line-through' },
+        { n: '03', box: '[ ]', name: 'room hum',        at: 'ALL',     len: 'cont.', ink: '#000000', strike: 'none' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

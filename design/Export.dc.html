@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+  <style>
+    body { margin:0; background:#FFFFFF; color:#000000;
+           font-family:'Courier Prime','Courier New',Courier,monospace; }
+    * { box-sizing:border-box; }
+    a { color:#000000; } a:hover { color:#767676; }
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:920px; background:#FFFFFF; padding:52px 56px 46px; display:flex; flex-direction:column;">
+
+  <div style="display:flex; align-items:baseline;">
+    <div style="font-size:19px; font-weight:700; letter-spacing:0.30em;">AUDBRE</div>
+    <div style="flex:1;"></div>
+    <div style="font-size:10.5px; letter-spacing:0.14em; color:#767676;">ENGINE MODAL &nbsp;·&nbsp; SAM-AUDIO-LARGE &nbsp;·&nbsp; A10G</div>
+  </div>
+  <div style="height:2px; background:#000000; margin-top:11px;"></div>
+  <div style="height:1px; background:#000000; margin-top:3px;"></div>
+
+  <div style="display:flex; align-items:baseline; margin-top:26px; font-size:13px;">
+    <span style="font-weight:700; letter-spacing:0.06em;">INTERVIEW-TAKE-3.WAV</span>
+    <span style="flex:1; border-bottom:1px dotted #C9C9C9; margin:0 12px 5px;"></span>
+    <span style="color:#767676; letter-spacing:0.08em;">04:12 &nbsp;·&nbsp; 44.1 kHz &nbsp;·&nbsp; MONO</span>
+  </div>
+
+  <div style="border:1px solid #000000; margin-top:14px; padding:18px 22px 16px;">
+    <div style="margin-bottom:18px;">
+      <div style="font-size:9.5px; font-weight:700; letter-spacing:0.24em; color:#767676; margin-bottom:8px;">BEFORE</div>
+      <div style="display:flex; align-items:center; gap:1px; height:74px;">
+        <sc-for list="{{before}}" as="b" hint-placeholder-count="60">
+          <div style="flex:1; height:100%; display:flex; align-items:center; justify-content:center;">
+            <div style="width:2px; height:{{b.h}}; background:#000000;"></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9.5px; font-weight:700; letter-spacing:0.24em; color:#767676; margin-bottom:8px;">AFTER</div>
+      <div style="display:flex; align-items:center; gap:1px; height:74px;">
+        <sc-for list="{{after}}" as="b" hint-placeholder-count="60">
+          <div style="flex:1; height:100%; display:flex; align-items:center; justify-content:center;">
+            <div style="width:2px; height:{{b.h}}; background:#000000;"></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="border:1px solid #000000; margin-top:24px;">
+    <div style="background:#000000; color:#FFFFFF; padding:6px 16px; font-size:10.5px; font-weight:700; letter-spacing:0.2em;">WHAT CAME OUT</div>
+    <div style="padding:18px 22px 6px;">
+      <sc-for list="{{removed}}" as="r" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; font-size:13px; padding-bottom:13px;">
+          <span style="width:30px; color:#C9C9C9; font-size:11px;">{{r.n}}</span>
+          <span style="color:#767676; text-decoration:line-through; text-decoration-thickness:1px;">{{r.name}}</span>
+          <span style="flex:1; border-bottom:1px dotted #C9C9C9; margin:0 12px 4px;"></span>
+          <span style="color:#767676; font-size:11.5px; letter-spacing:0.06em;">{{r.at}}</span>
+          <span style="width:70px; text-align:right; font-size:11.5px;">{{r.len}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border-top:1px solid #000000; margin:0 22px;"></div>
+    <div style="display:flex; align-items:baseline; padding:13px 22px 17px; font-size:12px; font-weight:700; letter-spacing:0.12em;">
+      <span style="width:30px;"></span>
+      <span>TOTAL</span>
+      <span style="flex:1;"></span>
+      <span>3 SOUNDS</span>
+      <span style="width:70px; text-align:right;">3.5s</span>
+    </div>
+  </div>
+
+  <div style="display:flex; align-items:flex-end; gap:18px; margin-top:30px;">
+    <span style="font-size:11px; font-weight:700; letter-spacing:0.16em; padding-bottom:10px;">WRITE AS &#9656;</span>
+    <div style="display:flex; gap:10px; padding-bottom:2px;">
+      <span style="background:#000000; color:#FFFFFF; padding:9px 17px; font-size:11px; letter-spacing:0.1em;">WAV &nbsp;24-BIT</span>
+      <span style="border:1px solid #C9C9C9; color:#767676; padding:8px 17px; font-size:11px; letter-spacing:0.1em;">MP3 &nbsp;320</span>
+      <span style="border:1px solid #C9C9C9; color:#767676; padding:8px 17px; font-size:11px; letter-spacing:0.1em;">BACK INTO THE VIDEO</span>
+    </div>
+    <div style="flex:1;"></div>
+    <div style="background:#000000; color:#FFFFFF; padding:12px 30px; font-size:12px; font-weight:700; letter-spacing:0.18em;">EXPORT</div>
+  </div>
+
+  <div style="display:flex; align-items:center; margin-top:18px; font-size:11px; color:#767676;">
+    <span style="border:1px solid #000000; color:#000000; padding:3px 8px; font-weight:700; letter-spacing:0.1em; font-size:10px;">SAVED</span>
+    <span style="margin-left:12px;">interview-take-3_audbre.wav &mdash; 44.3 MB, written beside the original.</span>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1280,"height":920}}'>
+class Component extends DCLogic {
+  wave(count, seed, bark) {
+    let s = seed;
+    const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+    const out = [];
+    for (let i = 0; i < count; i++) {
+      const t = i / count;
+      const speech = 0.30 + 0.42 * Math.abs(Math.sin(t * 13.0)) * (0.6 + 0.4 * Math.sin(t * 3.1));
+      const spike = bark ? 0.46 * Math.exp(-Math.pow((t - 0.435) * 30, 2)) : 0;
+      const h = Math.max(0.05, Math.min(1, (speech + spike) * (0.55 + 0.7 * rnd())));
+      out.push({ h: (h * 100).toFixed(1) + '%' });
+    }
+    return out;
+  }
+  renderVals() {
+    return {
+      before: this.wave(168, 7, true),
+      after: this.wave(168, 7, false),
+      removed: [
+        { n: '01', name: 'chair creak',         at: '00:12.4', len: '1.1s' },
+        { n: '02', name: 'phone vibration',     at: '01:47.0', len: '0.6s' },
+        { n: '03', name: 'dog barking outside', at: '00:34.2', len: '1.8s' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

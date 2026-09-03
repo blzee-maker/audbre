@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+  <style>
+    body { margin:0; background:#FFFFFF; color:#000000;
+           font-family:'Courier Prime','Courier New',Courier,monospace; }
+    * { box-sizing:border-box; }
+    a { color:#000000; } a:hover { color:#767676; }
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:1040px; background:#FFFFFF; padding:52px 56px 48px; display:flex; flex-direction:column;">
+
+  <div style="display:flex; align-items:baseline;">
+    <div style="font-size:19px; font-weight:700; letter-spacing:0.30em;">AUDBRE</div>
+    <div style="flex:1;"></div>
+    <div style="font-size:10.5px; letter-spacing:0.14em; color:#767676;">PARTS &amp; STATES</div>
+  </div>
+  <div style="height:2px; background:#000000; margin-top:11px;"></div>
+  <div style="height:1px; background:#000000; margin-top:3px;"></div>
+
+  <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:52px; margin-top:34px;">
+
+    <div>
+      <div style="font-size:10.5px; font-weight:700; letter-spacing:0.22em; border-bottom:1px solid #000000; padding-bottom:7px;">TYPE &mdash; COURIER PRIME</div>
+      <div style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">27 / 700</span>
+          <span style="font-size:27px; font-weight:700; letter-spacing:0.26em;">DISPLAY</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">19 / 700</span>
+          <span style="font-size:19px; font-weight:700; letter-spacing:0.30em;">AUDBRE</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">15 / 400</span>
+          <span style="font-size:15px;">prompt &amp; body copy</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">13 / 400</span>
+          <span style="font-size:13px;">stack rows and readouts</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">10.5 / 700</span>
+          <span style="font-size:10.5px; font-weight:700; letter-spacing:0.22em;">SECTION LABEL</span>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="width:96px; font-size:9.5px; color:#C9C9C9; letter-spacing:0.1em;">11 / 400</span>
+          <span style="font-size:11px; color:#767676;">secondary &mdash; #767676</span>
+        </div>
+      </div>
+
+      <div style="font-size:10.5px; font-weight:700; letter-spacing:0.22em; border-bottom:1px solid #000000; padding-bottom:7px; margin-top:42px;">INK</div>
+      <div style="display:flex; gap:0; margin-top:18px; border:1px solid #000000;">
+        <sc-for list="{{inks}}" as="k" hint-placeholder-count="5">
+          <div style="flex:1;">
+            <div style="height:54px; background:{{k.hex}};"></div>
+            <div style="border-top:1px solid #000000; padding:7px 8px; font-size:9px; letter-spacing:0.06em; color:#767676;">{{k.hex}}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:10.5px; font-weight:700; letter-spacing:0.22em; border-bottom:1px solid #000000; padding-bottom:7px;">CONTROLS</div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:20px;">
+        <span style="background:#000000; color:#FFFFFF; padding:11px 24px; font-size:12px; font-weight:700; letter-spacing:0.16em;">PRIMARY</span>
+        <span style="border:1px solid #000000; padding:10px 22px; font-size:12px; font-weight:700; letter-spacing:0.16em;">SECONDARY</span>
+        <span style="border:1px solid #C9C9C9; color:#C9C9C9; padding:10px 22px; font-size:12px; letter-spacing:0.16em;">DISABLED</span>
+        <span style="color:#767676; font-size:12px; letter-spacing:0.12em; text-decoration:underline; text-underline-offset:3px;">GHOST</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:9px; margin-top:20px;">
+        <span style="background:#000000; color:#FFFFFF; padding:6px 13px; font-size:11px; letter-spacing:0.1em;">CHIP ON</span>
+        <span style="border:1px solid #C9C9C9; color:#767676; padding:5px 13px; font-size:11px; letter-spacing:0.1em;">CHIP OFF</span>
+      </div>
+      <div style="margin-top:26px;">
+        <div style="border-bottom:1px solid #000000; padding-bottom:8px; display:flex; align-items:center;">
+          <span style="font-size:15px;">typed prompt</span>
+          <span style="display:inline-block; width:8px; height:16px; background:#000000; margin-left:3px;"></span>
+        </div>
+        <div style="border-bottom:1px solid #C9C9C9; padding-bottom:8px; margin-top:16px;">
+          <span style="font-size:15px; color:#C9C9C9;">what should go?</span>
+        </div>
+      </div>
+
+      <div style="font-size:10.5px; font-weight:700; letter-spacing:0.22em; border-bottom:1px solid #000000; padding-bottom:7px; margin-top:42px;">STACK ROW</div>
+      <div style="display:flex; flex-direction:column; margin-top:6px;">
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+          <div style="display:flex; align-items:baseline; padding:11px 2px; border-bottom:1px dotted #C9C9C9; font-size:13px; background:{{r.bg}};">
+            <span style="width:30px; color:#C9C9C9; font-size:11px;">{{r.n}}</span>
+            <span style="width:34px; font-weight:700; color:{{r.ink}};">{{r.box}}</span>
+            <span style="color:{{r.ink}}; text-decoration:{{r.strike}}; text-decoration-thickness:1px;">{{r.name}}</span>
+            <span style="flex:1; border-bottom:1px dotted #E4E4E4; margin:0 12px 4px;"></span>
+            <span style="color:#C9C9C9; font-size:10px; letter-spacing:0.14em;">{{r.state}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-size:10.5px; font-weight:700; letter-spacing:0.22em; border-bottom:1px solid #000000; padding-bottom:7px; margin-top:44px;">MESSAGES</div>
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px; margin-top:20px;">
+
+    <div style="border:1px solid #000000;">
+      <div style="background:#000000; color:#FFFFFF; padding:6px 14px; font-size:10px; font-weight:700; letter-spacing:0.2em;">WORKING</div>
+      <div style="padding:15px 16px 16px;">
+        <div style="font-size:12px;">Separating on GPU&hellip;</div>
+        <div style="height:3px; background:#E4E4E4; margin-top:12px;">
+          <div style="width:62%; height:100%; background:#000000;"></div>
+        </div>
+        <div style="font-size:10px; color:#767676; margin-top:8px; letter-spacing:0.1em;">CHUNK 5 OF 8</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid #000000;">
+      <div style="border-bottom:1px solid #000000; padding:6px 14px; font-size:10px; font-weight:700; letter-spacing:0.2em;">NOTHING FOUND</div>
+      <div style="padding:15px 16px 16px;">
+        <div style="font-size:12px;">No &ldquo;siren&rdquo; in the marked span.</div>
+        <div style="font-size:10.5px; color:#767676; margin-top:9px;">Widen the marks, or describe it the way it sounds.</div>
+      </div>
+    </div>
+
+    <div style="border:2px solid #000000;">
+      <div style="background:#000000; color:#FFFFFF; padding:5px 13px; font-size:10px; font-weight:700; letter-spacing:0.2em;">STOPPED</div>
+      <div style="padding:15px 16px 16px;">
+        <div style="font-size:12px;">GPU worker unreachable.</div>
+        <div style="font-size:10.5px; color:#767676; margin-top:9px;">Check AUDBRE_MODAL_URL, then try again.</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1280,"height":1040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      inks: [
+        { hex: '#000000' }, { hex: '#767676' }, { hex: '#C9C9C9' },
+        { hex: '#E4E4E4' }, { hex: '#FFFFFF' }
+      ],
+      rows: [
+        { n: '01', box: '[x]', name: 'kept — struck out', state: 'ACTIVE', ink: '#767676', strike: 'line-through', bg: 'transparent' },
+        { n: '02', box: '[ ]', name: 'muted — back in the mix', state: 'OFF', ink: '#000000', strike: 'none', bg: 'transparent' },
+        { n: '03', box: '[x]', name: 'hovered', state: 'HOVER', ink: '#767676', strike: 'line-through', bg: '#F4F4F4' },
+        { n: '04', box: '[~]', name: 'previewing — not kept yet', state: 'PENDING', ink: '#000000', strike: 'none', bg: 'transparent' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

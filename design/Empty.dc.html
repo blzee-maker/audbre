@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+  <style>
+    body { margin:0; background:#FFFFFF; color:#000000;
+           font-family:'Courier Prime','Courier New',Courier,monospace; }
+    * { box-sizing:border-box; }
+    a { color:#000000; } a:hover { color:#767676; }
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:920px; background:#FFFFFF; padding:52px 56px 46px; display:flex; flex-direction:column;">
+
+  <div style="display:flex; align-items:baseline;">
+    <div style="font-size:19px; font-weight:700; letter-spacing:0.30em;">AUDBRE</div>
+    <div style="flex:1;"></div>
+    <div style="font-size:10.5px; letter-spacing:0.14em; color:#767676;">ENGINE MODAL &nbsp;·&nbsp; SAM-AUDIO-LARGE &nbsp;·&nbsp; A10G</div>
+  </div>
+  <div style="height:2px; background:#000000; margin-top:11px;"></div>
+  <div style="height:1px; background:#000000; margin-top:3px;"></div>
+
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 0 24px;">
+
+    <div style="width:720px; border:1px dashed #000000; padding:74px 40px 66px; display:flex; flex-direction:column; align-items:center;">
+      <div style="font-size:27px; font-weight:700; letter-spacing:0.26em;">DROP A RECORDING</div>
+      <div style="font-size:11px; letter-spacing:0.2em; color:#767676; margin-top:20px;">
+        WAV &nbsp;·&nbsp; MP3 &nbsp;·&nbsp; M4A &nbsp;·&nbsp; FLAC &nbsp;·&nbsp; MP4 &nbsp;·&nbsp; MOV
+      </div>
+      <div style="width:64px; height:1px; background:#C9C9C9; margin:34px 0;"></div>
+      <div style="border:1px solid #000000; padding:12px 30px; font-size:12px; font-weight:700; letter-spacing:0.18em;">CHOOSE A FILE</div>
+    </div>
+
+    <div style="display:flex; align-items:center; margin-top:44px;">
+      <span style="font-size:14px; letter-spacing:0.16em;">MARK A SOUND. NAME IT. IT&rsquo;S GONE.</span>
+      <span style="display:inline-block; width:9px; height:15px; background:#000000; margin-left:6px;"></span>
+    </div>
+
+  </div>
+
+  <div>
+    <div style="display:flex; align-items:baseline;">
+      <span style="font-size:10.5px; font-weight:700; letter-spacing:0.22em;">RECENT</span>
+      <span style="flex:1; border-bottom:1px solid #000000; margin:0 12px 4px;"></span>
+    </div>
+    <div style="display:flex; flex-direction:column; margin-top:4px;">
+      <sc-for list="{{recent}}" as="r" hint-placeholder-count="3">
+        <div style="display:flex; align-items:baseline; padding:10px 2px; border-bottom:1px dotted #C9C9C9; font-size:12.5px;">
+          <span style="width:30px; color:#C9C9C9; font-size:11px;">{{r.n}}</span>
+          <span>{{r.name}}</span>
+          <span style="flex:1; border-bottom:1px dotted #E4E4E4; margin:0 12px 4px;"></span>
+          <span style="color:#767676; font-size:11px; letter-spacing:0.06em;">{{r.meta}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview":{"width":1280,"height":920}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      recent: [
+        { n: '01', name: 'interview-take-3.wav', meta: '04:12  ·  3 REMOVED  ·  2 MIN AGO' },
+        { n: '02', name: 'balcony-b-roll.mp4',   meta: '01:38  ·  1 REMOVED  ·  YESTERDAY' },
+        { n: '03', name: 'kitchen-ambience.wav', meta: '12:04  ·  0 REMOVED  ·  MON' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+storage/
+*.wav
+*.mp3
+*.mp4
+.DS_Store
+
+# seeded design canvas (build artifact — re-seed from design/*.dc.html)
+audbre-interface.html
+
+*.egg-info/
+build/
+dist/

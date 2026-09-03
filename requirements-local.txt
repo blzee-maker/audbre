@@ -1,0 +1,5 @@
+# Optional: run SAM Audio locally on CPU instead of a cloud GPU.
+# Slow on an MX350/8GB box - expect minutes per clip. Use sam-audio-small.
+torch>=2.5
+torchaudio>=2.5
+sam-audio @ git+https://github.com/facebookresearch/sam-audio.git

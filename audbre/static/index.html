@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AudBre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="mark">AUDBRE</div>
+    <div class="spacer"></div>
+    <div class="engine" id="engine">CHECKING&hellip;</div>
+  </header>
+  <div class="rule2"></div>
+  <div class="rule1"></div>
+
+  <!-- ============ EMPTY ============ -->
+  <section id="empty">
+    <div class="dropzone" id="drop">
+      <div class="drop-title">DROP A RECORDING</div>
+      <div class="drop-formats">WAV &nbsp;&middot;&nbsp; MP3 &nbsp;&middot;&nbsp; M4A &nbsp;&middot;&nbsp; FLAC &nbsp;&middot;&nbsp; MP4 &nbsp;&middot;&nbsp; MOV</div>
+      <div class="drop-sep"></div>
+      <button class="btn-secondary" id="browse">CHOOSE A FILE</button>
+      <input type="file" id="file" hidden accept="audio/*,video/*">
+    </div>
+
+    <div class="tagline">MARK A SOUND. NAME IT. IT&rsquo;S GONE.<span class="caret"></span></div>
+
+    <div id="recent-wrap" hidden>
+      <div class="section-head"><span>RECENT</span><span class="hr"></span></div>
+      <ul id="recent"></ul>
+    </div>
+  </section>
+
+  <!-- ============ EDITOR ============ -->
+  <section id="editor" hidden>
+
+    <div class="fileline">
+      <span class="name" id="fname"></span>
+      <span class="leader"></span>
+      <span class="meta" id="fmeta"></span>
+    </div>
+
+    <div class="wavebox">
+      <canvas id="wave"></canvas>
+      <div class="ruler" id="ruler"></div>
+    </div>
+
+    <div class="markline">
+      <span class="tag" id="marktag" hidden>MARKED</span>
+      <span id="markrange"></span>
+      <span class="dur" id="markdur"></span>
+      <span class="spacer"></span>
+      <button class="ghost" id="clearmark" hidden>CLEAR MARKS</button>
+    </div>
+
+    <div class="transport">
+      <button class="btn-secondary" id="play">&#9654; PLAY</button>
+      <div class="ab">
+        <span class="label">LISTEN TO</span>
+        <button class="chip on" data-src="current">CLEANED</button>
+        <button class="chip" data-src="base">ORIGINAL</button>
+        <button class="chip" data-src="target" id="chip-target" disabled>REMOVED SOUND</button>
+      </div>
+    </div>
+
+    <div class="promptrow">
+      <span class="prompt-label">REMOVE &#9656;</span>
+      <div class="field"><input id="desc" placeholder="what should go?" autocomplete="off" spellcheck="false"></div>
+      <button class="btn-primary" id="run">PREVIEW</button>
+    </div>
+    <div class="hint">
+      Drag across the waveform to mark when it happens &mdash; that anchors the model to <b>that</b> sound, not every one like it in the file.
+    </div>
+
+    <div class="panel" id="status" hidden>
+      <div class="panel-head" id="status-head">WORKING</div>
+      <div class="panel-body" style="display:block">
+        <div class="title" id="status-msg"></div>
+        <div class="bar"><i id="status-bar" style="width:0%"></i></div>
+        <div class="sub" id="status-sub"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="result" hidden>
+      <div class="panel-head" id="result-head">FOUND IT</div>
+      <div class="panel-body">
+        <div>
+          <div class="title" id="result-title"></div>
+          <div class="sub" id="result-sub"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="panel-actions">
+          <button class="chip" id="discard">DISCARD</button>
+          <button class="btn-primary" id="keep">KEEP IT</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="section-head">
+        <span>REMOVAL STACK</span><span class="hr"></span>
+        <span class="count" id="stackcount"></span>
+      </div>
+      <ul id="layers"></ul>
+    </div>
+
+    <div class="exportrow">
+      <span class="prompt-label">WRITE AS &#9656;</span>
+      <div class="chips" id="formats">
+        <button class="chip on" data-fmt="wav">WAV &nbsp;24-BIT</button>
+        <button class="chip" data-fmt="mp3">MP3 &nbsp;320</button>
+        <button class="chip" data-fmt="video" id="fmt-video" hidden>BACK INTO THE VIDEO</button>
+      </div>
+      <span class="spacer"></span>
+      <button class="ghost" id="close">CLOSE FILE</button>
+      <button class="btn-primary" id="export">EXPORT</button>
+    </div>
+
+    <div class="saved" id="saved" hidden>
+      <span class="tag">SAVED</span>
+      <span id="saved-msg"></span>
+    </div>
+
+  </section>
+
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

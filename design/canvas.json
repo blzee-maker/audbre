@@ -1,0 +1,25 @@
+{
+  "artboards": [
+    { "file": "Empty.dc.html",  "x": 0,    "y": 0,    "w": 1280, "h": 920,  "title": "1 — Empty" },
+    { "file": "Main.dc.html",   "x": 1360, "y": 0,    "w": 1280, "h": 920,  "title": "2 — Editor" },
+    { "file": "Export.dc.html", "x": 2720, "y": 0,    "w": 1280, "h": 920,  "title": "3 — Export" },
+    { "file": "Parts.dc.html",  "x": 0,    "y": 1040, "w": 1280, "h": 1040, "title": "Parts & states" }
+  ],
+  "annotations": [
+    {
+      "id": "concept",
+      "x": 1360,
+      "y": -150,
+      "w": 460,
+      "text": "The idea: removing a sound is striking a line through it.\nKept removals are struck out and greyed. Un-check one and the text stands back up — the sound comes back into the mix."
+    },
+    {
+      "id": "palette",
+      "x": 1400,
+      "y": 1040,
+      "w": 400,
+      "text": "Strictly achromatic. Black and white do the work; two greys carry hierarchy. Selection on the waveform is an inverted band — white bars on black — rather than a colour."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

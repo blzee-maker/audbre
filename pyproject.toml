@@ -1,0 +1,52 @@
+[project]
+name = "audbre"
+version = "0.1.0"
+description = "Point at a sound in a recording and take it out."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Om Jha" }]
+keywords = ["audio", "source-separation", "sam-audio", "noise-removal"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Web Environment",
+  "Intended Audience :: End Users/Desktop",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Sound/Audio :: Editors",
+]
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.34",
+  "python-multipart>=0.0.20",
+  "pydantic>=2.10",
+  "numpy>=1.26",
+  "soundfile>=0.12.1",
+  "httpx>=0.28",
+]
+
+[project.optional-dependencies]
+deploy = ["modal>=0.68"]
+local = ["torch>=2.5", "torchaudio>=2.5"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+audbre = "audbre.server:main"
+
+[project.urls]
+Repository = "https://github.com/blzee-maker/audbre"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["audbre*"]
+
+[tool.setuptools.package-data]
+audbre = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]

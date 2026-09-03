@@ -1,0 +1,14 @@
+# --- core server ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+numpy>=1.26
+soundfile>=0.12.1
+
+# --- cloud GPU backend ---
+modal>=0.68
+httpx>=0.28
+
+# Local CPU fallback is optional and heavy; install with:
+#   pip install -r requirements-local.txt
