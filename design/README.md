@@ -11,6 +11,21 @@ sources; the published canvas is a build artifact and is not committed.
 | `Parts.dc.html` | Type scale, controls, row and message states |
 | `canvas.json` | Layout, annotations, launch view |
 
+Page two of the canvas holds the README architecture diagram, in both GitHub
+themes. Those two artboards and the shipped SVGs come from one generator, so
+they cannot drift:
+
+| File | Role |
+| --- | --- |
+| `make_diagram.py` | **Source of truth** — edit this, not the SVGs |
+| `architecture-light.svg` | Committed, referenced by the README |
+| `architecture-dark.svg` | Committed, picked by `prefers-color-scheme` |
+| `ArchLight.dc.html` / `ArchDark.dc.html` | Generated artboards |
+
+```bash
+python design/make_diagram.py
+```
+
 Re-seed and publish after editing any of them:
 
 ```bash

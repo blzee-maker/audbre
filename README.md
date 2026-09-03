@@ -27,17 +27,15 @@ last — so a stack that's been toggled around can be re-rendered exactly.
 
 ## How it runs
 
-```
-LOCAL                                    CLOUD (Modal, serverless GPU)
-┌──────────────────────────┐            ┌─────────────────────────────┐
-│  Browser                 │            │  A10G container, warm 4 min │
-│   waveform · prompt · A/B│   HTTPS    │   sam-audio-large           │
-├──────────────────────────┤ ─────────► │   returns target + residual │
-│  FastAPI                 │ ◄───────── │                             │
-│   chunking · layer stack │            └─────────────────────────────┘
-│   ffmpeg in / out        │
-└──────────────────────────┘
-```
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="design/architecture-dark.svg">
+    <img
+      src="design/architecture-light.svg"
+      alt="AudBre architecture. Locally, a browser shows the waveform with a grey ghost of the original, lets you drag to mark a span, audition A/B and manage the removal stack; it exchanges the file, prompt and marked span with a FastAPI service that decodes with ffmpeg, cuts 30-second windows with 2 seconds of overlap, cross-fades them back together and stores layer deltas on disk. Across the boundary in the cloud, a Modal A10G container running sam-audio-large receives a 30-second WAV chunk plus anchors and returns the target and residual."
+      width="100%">
+  </picture>
+</p>
 
 Long recordings are cut into 30-second windows with 2 seconds of overlap and
 cross-faded back together, so a 40-minute interview never has to fit in GPU
