@@ -81,6 +81,38 @@ python -m audbre.server
 
 → http://127.0.0.1:8000
 
+## Choosing a checkpoint, and the GPU it needs
+
+These checkpoints load in **fp32**, and that is what decides the GPU — not
+speed. Measured on a 22 GiB A10G:
+
+| Checkpoint | Weights on GPU | Fits a 22 GiB A10G |
+| --- | --- | --- |
+| `sam-audio-small` | ~6 GB | yes — the default |
+| `sam-audio-base` | 20.6 GB | no, OOMs on a 2-second clip |
+| `sam-audio-large` | ~7B params | no |
+
+For `base` or `large`, either move `GPU` in `modal_app.py` to `"A100"` (40 GB)
+or cast the weights to bfloat16, which halves the requirement but needs the
+input tensors cast to match.
+
+Reranking also costs memory: candidates run in parallel, so `separate()` uses
+2 candidates for an unanchored prompt and 1 when you have marked a span.
+
+## Deploying from Windows
+
+Two things bite on a `cp1252` console:
+
+```powershell
+$env:PYTHONIOENCODING = "utf-8"   # or modal deploy dies mid-build
+modal deploy modal_app.py
+```
+
+`modal deploy` **exits 0 even when the build fails**, so check `/health`
+rather than the exit code. `/health` returns a `build` stamp for exactly this
+reason — if it does not match what you just deployed, a warm container is
+still serving the old code and needs `modal app stop audbre --yes` first.
+
 ## Running without a GPU
 
 Set `AUDBRE_ENGINE=local` and install the heavier extras:
@@ -100,7 +132,7 @@ OOM.
 | --- | --- | --- |
 | `AUDBRE_ENGINE` | `modal` | `modal` (cloud GPU) or `local` (CPU) |
 | `AUDBRE_MODAL_URL` | — | Base URL printed by `modal deploy` |
-| `AUDBRE_MODEL` | `facebook/sam-audio-large` | `small`, `base` or `large` |
+| `AUDBRE_MODEL` | `facebook/sam-audio-small` | `small`, `base` or `large` — see GPU memory below |
 | `AUDBRE_STORAGE` | `./storage` | Where projects are kept |
 | `AUDBRE_HOST` / `AUDBRE_PORT` | `127.0.0.1` / `8000` | Server bind |
 | `HF_TOKEN` | — | Needs approved access to the gated repo |
