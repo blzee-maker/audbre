@@ -27,7 +27,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-deploy = ["modal>=0.68"]
+deploy = ["modal>=1.0"]
 local = ["torch>=2.5", "torchaudio>=2.5"]
 dev = ["pytest>=8.0"]
 

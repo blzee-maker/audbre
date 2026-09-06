@@ -7,7 +7,7 @@ numpy>=1.26
 soundfile>=0.12.1
 
 # --- cloud GPU backend ---
-modal>=0.68
+modal>=1.0
 httpx>=0.28
 
 # Local CPU fallback is optional and heavy; install with:
