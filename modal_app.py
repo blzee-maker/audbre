@@ -7,9 +7,11 @@ Modal prints a base URL; paste it into .env as AUDBRE_MODAL_URL.
 Requires a Modal secret named `huggingface` holding HF_TOKEN, and an approved
 access request on the gated facebook/sam-audio-* repos.
 """
+import secrets
+
 import modal
 
-BUILD = "181621"  # bumped each deploy so /health proves what is live
+BUILD = "auth1"  # bumped each deploy so /health proves what is live
 from pydantic import BaseModel
 
 # These checkpoints load in fp32, and that is what decides the GPU.
@@ -131,7 +133,13 @@ def verify() -> str:
     gpu=GPU,
     image=image,
     volumes={"/cache": cache},
-    secrets=[modal.Secret.from_name("huggingface")],
+    secrets=[
+        modal.Secret.from_name("huggingface"),
+        # Required - the endpoint is public, so it must be gated. Create with:
+        #   modal secret create audbre-worker AUDBRE_WORKER_TOKEN=$(openssl rand -hex 24)
+        # Set the same value as AUDBRE_WORKER_TOKEN in your .env.
+        modal.Secret.from_name("audbre-worker", required_keys=["AUDBRE_WORKER_TOKEN"]),
+    ],
     scaledown_window=IDLE_SECONDS,
     timeout=900,
 )
@@ -156,11 +164,24 @@ class Separator:
         import tempfile
         from pathlib import Path
 
+        import os
+
         import numpy as np
         import soundfile as sf
-        from fastapi import FastAPI, HTTPException
+        from fastapi import FastAPI, Header, HTTPException
 
         api = FastAPI(title="AudBre GPU worker")
+
+        # Modal web endpoints are public. Anyone who learns this URL can spend
+        # the owner's credits, so require a shared secret when one is set.
+        # Set AUDBRE_WORKER_TOKEN in the `audbre-worker` Modal secret to enable.
+        expected_token = os.environ.get("AUDBRE_WORKER_TOKEN", "")
+
+        def check(token: str | None) -> None:
+            if not expected_token:
+                return
+            if not token or not secrets.compare_digest(token, expected_token):
+                raise HTTPException(401, "missing or invalid X-AudBre-Token")
 
         def encode(arr) -> str:
             buf = io.BytesIO()
@@ -174,7 +195,8 @@ class Separator:
                     "sample_rate": self.processor.audio_sampling_rate}
 
         @api.post("/separate")
-        def separate(req: SeparateRequest):
+        def separate(req: SeparateRequest, x_audbre_token: str | None = Header(default=None)):
+            check(x_audbre_token)
             if not req.description and not req.anchors:
                 raise HTTPException(400, "need a description, an anchor, or both")
 

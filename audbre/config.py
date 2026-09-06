@@ -27,6 +27,9 @@ ENGINE = os.environ.get("AUDBRE_ENGINE", "modal").lower()
 MODAL_URL = os.environ.get("AUDBRE_MODAL_URL", "").rstrip("/")
 MODEL = os.environ.get("AUDBRE_MODEL", "facebook/sam-audio-large")
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
+# Shared secret for your own GPU worker, so a leaked URL cannot be used
+# by anyone else to spend your credits.
+WORKER_TOKEN = os.environ.get("AUDBRE_WORKER_TOKEN", "")
 HOST = os.environ.get("AUDBRE_HOST", "127.0.0.1")
 PORT = int(os.environ.get("AUDBRE_PORT", "8000"))
 

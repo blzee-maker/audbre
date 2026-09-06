@@ -9,6 +9,15 @@ recording and leaves everything else alone.
 Built on [SAM Audio](https://github.com/facebookresearch/sam-audio), Meta's
 promptable audio separation model.
 
+> [!IMPORTANT]
+> **There is no hosted AudBre, and no shared GPU.** You run it on your own
+> hardware, against your own Modal account, paying your own costs. The setup
+> below deploys a GPU worker into *your* Modal workspace — nothing in this
+> repository points at anyone else's, and no endpoint is provided.
+>
+> Roughly: a few cents per separation, and nothing at all while idle. See
+> [What it costs](#what-it-costs).
+
 ---
 
 ## The idea
@@ -63,15 +72,45 @@ but the weights are gated. Accept the licence on
 [facebook/sam-audio-large](https://huggingface.co/facebook/sam-audio-large)
 (approval usually lands within half an hour), then `hf auth login`.
 
-**2. Deploy the GPU worker.**
+**2. Deploy your own GPU worker.** This creates a Modal workspace billed to
+you. Modal gives new accounts a small credit to start with.
 
 ```bash
 pip install modal && modal setup
+
+# your Hugging Face token, so the container can pull the gated weights
 modal secret create huggingface HF_TOKEN=hf_...
+
+# a shared secret so only you can call your worker - see below
+modal secret create audbre-worker AUDBRE_WORKER_TOKEN=$(openssl rand -hex 24)
+
 modal deploy modal_app.py
 ```
 
-Paste the URL it prints into `.env` as `AUDBRE_MODAL_URL`.
+Paste the URL it prints into `.env` as `AUDBRE_MODAL_URL`, and the same token
+value as `AUDBRE_WORKER_TOKEN`.
+
+> [!WARNING]
+> **Modal web endpoints are public.** Anyone who learns your worker URL can
+> POST to it and spend your credits. `/separate` therefore requires an
+> `X-AudBre-Token` header matching your secret. Do not commit your `.env`, and
+> do not paste your worker URL anywhere public.
+
+## What it costs
+
+Only the GPU costs anything, and only while it is running.
+
+| | |
+| --- | --- |
+| Idle | **\$0** - the container shuts down after 4 minutes |
+| Per separation | roughly **\$0.02-0.05** on an A10G |
+| Cold start | ~2.5 minutes of GPU time before the first request ([#7](https://github.com/blzee-maker/audbre/issues/7)) |
+| The UI, chunking, ffmpeg, exports | free, all local |
+
+The warm window resets on every request, so a long file processed as several
+chunks is one continuous billed run rather than one per chunk.
+
+To spend nothing at all, use the CPU path below.
 
 **3. Run it.**
 

@@ -49,8 +49,12 @@ class ModalEngine:
         }
         # Modal answers 303 while a container is still starting; without
         # follow_redirects httpx stops there and the call looks like a failure.
+        headers = {}
+        if config.WORKER_TOKEN:
+            headers["X-AudBre-Token"] = config.WORKER_TOKEN
+
         with httpx.Client(timeout=self.timeout, follow_redirects=True) as client:
-            resp = client.post(f"{self.url}/separate", json=payload)
+            resp = client.post(f"{self.url}/separate", json=payload, headers=headers)
             if resp.status_code != 200:
                 raise RuntimeError(f"modal call failed [{resp.status_code}]: {resp.text[:500]}")
             body = resp.json()
