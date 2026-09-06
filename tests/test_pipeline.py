@@ -97,49 +97,49 @@ def test_upload_reports_media_info(client, wav_bytes):
     assert body["has_video"] is False
     assert len(body["peaks"]) > 100
     assert body["layers"] == []
-    STATE["pid"] = body["id"]
+    STATE['pid'] = body["id"]
 
 
 def test_separation_isolates_the_tone(client):
-    job = run_job(client, STATE["pid"], "one kilohertz tone", [["+", TONE_FROM, TONE_TO]])
+    job = run_job(client, STATE['pid'], "one kilohertz tone", [["+", TONE_FROM, TONE_TO]])
     assert job["found"] is True
     assert job["target_peak"] > 0.05
 
     target, sr = fetch(client, f"/api/jobs/{job['id']}/audio/target")
     residual, _ = fetch(client, f"/api/jobs/{job['id']}/audio/residual")
     assert band_energy(target, sr) > band_energy(residual, sr) * 10
-    STATE["job_id"] = job["id"]
+    STATE['job_id'] = job["id"]
 
 
 def test_keeping_a_layer_removes_the_tone(client):
-    before, sr = fetch(client, f"/api/projects/{STATE["pid"]}/audio/current")
-    res = client.post(f"/api/projects/{STATE["pid"]}/layers", json={"job_id": STATE["job_id"]})
+    before, sr = fetch(client, f"/api/projects/{STATE['pid']}/audio/current")
+    res = client.post(f"/api/projects/{STATE['pid']}/layers", json={"job_id": STATE['job_id']})
     assert res.status_code == 200, res.text
     project = res.json()
     assert len(project["layers"]) == 1
     assert project["layers"][0]["enabled"] is True
 
-    after, _ = fetch(client, f"/api/projects/{STATE["pid"]}/audio/current")
+    after, _ = fetch(client, f"/api/projects/{STATE['pid']}/audio/current")
     assert band_energy(after, sr) < band_energy(before, sr) * 0.25
-    STATE["layer_id"] = project["layers"][0]["id"]
+    STATE['layer_id'] = project["layers"][0]["id"]
 
 
 def test_muting_a_layer_puts_the_sound_back(client):
     muted = client.patch(
-        f"/api/projects/{STATE["pid"]}/layers/{STATE["layer_id"]}", json={"enabled": False}
+        f"/api/projects/{STATE['pid']}/layers/{STATE['layer_id']}", json={"enabled": False}
     )
     assert muted.status_code == 200
     assert muted.json()["layers"][0]["enabled"] is False
 
-    restored, sr = fetch(client, f"/api/projects/{STATE["pid"]}/audio/current")
-    original, _ = fetch(client, f"/api/projects/{STATE["pid"]}/audio/base")
+    restored, sr = fetch(client, f"/api/projects/{STATE['pid']}/audio/current")
+    original, _ = fetch(client, f"/api/projects/{STATE['pid']}/audio/base")
     assert band_energy(restored, sr) > band_energy(original, sr) * 0.8
 
-    client.patch(f"/api/projects/{STATE["pid"]}/layers/{STATE["layer_id"]}", json={"enabled": True})
+    client.patch(f"/api/projects/{STATE['pid']}/layers/{STATE['layer_id']}", json={"enabled": True})
 
 
 def test_separation_without_a_prompt_is_rejected(client):
-    res = client.post(f"/api/projects/{STATE["pid"]}/separate", json={"description": "", "anchors": []})
+    res = client.post(f"/api/projects/{STATE['pid']}/separate", json={"description": "", "anchors": []})
     assert res.status_code == 400
 
 
@@ -167,7 +167,7 @@ def test_unanchored_chunks_pass_through_untouched(client, wav_bytes, monkeypatch
 
 
 def test_export_writes_a_wav(client):
-    res = client.get(f"/api/projects/{STATE["pid"]}/export", params={"format": "wav"})
+    res = client.get(f"/api/projects/{STATE['pid']}/export", params={"format": "wav"})
     assert res.status_code == 200
     data, sr = sf.read(io.BytesIO(res.content), dtype="float32", always_2d=False)
     assert sr == SR
@@ -175,7 +175,7 @@ def test_export_writes_a_wav(client):
 
 
 def test_export_rejects_video_for_audio_only_project(client):
-    res = client.get(f"/api/projects/{STATE["pid"]}/export", params={"format": "video"})
+    res = client.get(f"/api/projects/{STATE['pid']}/export", params={"format": "video"})
     assert res.status_code == 400
 
 
