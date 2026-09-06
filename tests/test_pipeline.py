@@ -14,7 +14,9 @@ import numpy as np
 import pytest
 import soundfile as sf
 
-SR = 44100
+from audbre import config as _cfg
+
+SR = _cfg.SAMPLE_RATE
 DURATION = 8.0
 TONE_HZ = 1000.0
 TONE_FROM, TONE_TO = 3.0, 4.0

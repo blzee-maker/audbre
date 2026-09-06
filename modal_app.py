@@ -27,11 +27,82 @@ image = (
         "huggingface_hub",
     )
     .pip_install("git+https://github.com/facebookresearch/sam-audio.git")
+    # Both pins must come last, after sam-audio has pulled its own tree.
+    #
+    # protobuf: sam-audio drags in one older than Modal's injected client can
+    #   use, and the container crash-loops on boot with
+    #   "Enum VolumeFsVersion has no value defined for 'ValueType'".
+    #   Capped below 7 so wandb stays satisfiable.
+    # huggingface_hub / transformers: these two are one decision, not two.
+    #   sam-audio's BaseModel._from_pretrained takes proxies and
+    #   resume_download as required kwargs, which only hub 0.x passes — under
+    #   hub 1.x loading dies with a TypeError. But sam-audio asks for
+    #   transformers>=4.54 with no upper bound, so pip takes 5.x, which
+    #   imports is_offline_mode and therefore needs hub>=1.0. Holding
+    #   transformers in the 4.x line is what makes hub<1.0 satisfiable.
+    .pip_install(
+        "protobuf>=5.27,<7",
+        "huggingface_hub>=0.26,<1.0",
+        "transformers>=4.54,<5",
+    )
     .env({"HF_HOME": "/cache"})
 )
 
 app = modal.App("audbre")
 cache = modal.Volume.from_name("audbre-hf-cache", create_if_missing=True)
+
+
+def disable_visual_ranker() -> None:
+    """Build the model without its ImageBind visual ranker.
+
+    SAMAudio.__init__ always calls create_ranker(cfg.visual_ranker), and for
+    these checkpoints that config selects ImageBind — which asserts at import
+    time and takes the whole container down with it.
+
+    We prompt with text and timeline spans, never with video frames, so that
+    ranker has nothing to rank. create_ranker already treats a missing ranker
+    as a supported case (`assert config is None; return None`), so we make the
+    ImageBind branch produce that same None rather than patching create_ranker
+    itself. Because create_ranker resolves the class as a module global, this
+    also covers ImageBind nested inside an EnsembleRankerConfig.
+    """
+    import sam_audio.ranking as ranking
+
+    ranking.ImageBindRanker = lambda config: None
+
+
+@app.function(
+    image=image,
+    volumes={"/cache": cache},
+    secrets=[modal.Secret.from_name("huggingface")],
+    cpu=4,
+    memory=16384,
+    timeout=1800,
+)
+def verify() -> str:
+    """Load the model on CPU to prove the dependency chain is sound.
+
+    Run with `modal run modal_app.py::verify` before deploying. Construction is
+    what keeps breaking, and it breaks identically on CPU — so this answers the
+    question for a fraction of the GPU cost, and without a crash-looping web
+    container retrying on expensive hardware.
+    """
+    from sam_audio import SAMAudio, SAMAudioProcessor
+
+    disable_visual_ranker()
+
+    model = SAMAudio.from_pretrained(MODEL_DEFAULT).eval()
+    processor = SAMAudioProcessor.from_pretrained(MODEL_DEFAULT)
+
+    print("=" * 52)
+    print("LOADED OK      ", MODEL_DEFAULT)
+    print("sample rate    ", processor.audio_sampling_rate)
+    print("visual ranker  ", model.visual_ranker)
+    print("text ranker    ", type(model.text_ranker).__name__)
+    print("span predictor ", type(getattr(model, "span_predictor", None)).__name__)
+    print("parameters     ", f"{sum(p.numel() for p in model.parameters()) / 1e6:.0f}M")
+    print("=" * 52)
+    return "ok"
 
 
 @app.cls(
@@ -47,6 +118,8 @@ class Separator:
     def load(self):
         import torch
         from sam_audio import SAMAudio, SAMAudioProcessor
+
+        disable_visual_ranker()
 
         self.torch = torch
         self.model_id = MODEL_DEFAULT

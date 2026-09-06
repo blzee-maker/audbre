@@ -30,9 +30,11 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "")
 HOST = os.environ.get("AUDBRE_HOST", "127.0.0.1")
 PORT = int(os.environ.get("AUDBRE_PORT", "8000"))
 
-# SAM Audio operates at a fixed rate; we resample everything on the way in
-# and only convert back at export time.
-SAMPLE_RATE = 44100
+# SAM Audio operates at a fixed 48 kHz; we resample everything on the way in
+# and only convert back at export time. This must match the model, or chunks
+# come back a different length than they went out and overlap-add silently
+# pads or truncates the difference.
+SAMPLE_RATE = 48000
 
 # Long recordings are processed in overlapping windows and cross-faded back
 # together, so a 40-minute interview doesn't have to fit in GPU memory.

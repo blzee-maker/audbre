@@ -53,6 +53,14 @@ class ModalEngine:
                 raise RuntimeError(f"modal call failed [{resp.status_code}]: {resp.text[:500]}")
             body = resp.json()
 
+        returned = int(body.get("sample_rate", sample_rate))
+        if returned != sample_rate:
+            raise RuntimeError(
+                f"worker returned {returned} Hz for audio sent at {sample_rate} Hz; "
+                f"set AUDBRE sample rate to {returned} - chunk lengths will not "
+                f"line up otherwise"
+            )
+
         return SeparationResult(
             target=_decode(body["target"]),
             residual=_decode(body["residual"]),
