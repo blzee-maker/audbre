@@ -1,0 +1,308 @@
+{
+  "prompt": "remove background noise",
+  "timed_runs_per_clip_backend": 3,
+  "warmup_runs_per_clip_backend": 1,
+  "cold_start": null,
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.1 (tags/v3.13.1:0671451, Dec  3 2024, 19:06:28) [MSC v.1942 64 bit (AMD64)]",
+    "python_executable": "C:\\Projects\\AudBre\\.venv\\Scripts\\python.exe",
+    "cpu_model": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+    "ram_bytes": 8358518784,
+    "top_processes": [
+      {
+        "name": "Memory Compression",
+        "working_set_bytes": 836259840
+      },
+      {
+        "name": "Code",
+        "working_set_bytes": 466956288
+      },
+      {
+        "name": "Code",
+        "working_set_bytes": 444395520
+      },
+      {
+        "name": "copilot-runtime",
+        "working_set_bytes": 296013824
+      },
+      {
+        "name": "Code",
+        "working_set_bytes": 238153728
+      },
+      {
+        "name": "MsMpEng",
+        "working_set_bytes": 196984832
+      },
+      {
+        "name": "Code",
+        "working_set_bytes": 133193728
+      },
+      {
+        "name": "Code",
+        "working_set_bytes": 118022144
+      },
+      {
+        "name": "WhatsApp.Root",
+        "working_set_bytes": 113704960
+      },
+      {
+        "name": "Wispr Flow",
+        "working_set_bytes": 111681536
+      }
+    ],
+    "heavy_app_threshold_bytes": 1073741824,
+    "heavy_apps_at_least_threshold": [],
+    "process_query_error": null,
+    "libraries": {
+      "numpy": "2.5.2",
+      "soundfile": "0.14.0",
+      "httpx": "0.28.1",
+      "fastapi": "0.141.1",
+      "uvicorn": "0.52.4",
+      "torch": null,
+      "torchaudio": null,
+      "sam-audio": null,
+      "modal": "1.5.5"
+    },
+    "audbre_model": "facebook/sam-audio-small",
+    "configured_engine": "modal",
+    "modal_url_configured": true,
+    "modal_worker_token_configured": false,
+    "modal_gpu_type_configured": "A10G",
+    "modal_gpu_type_observed": null
+  },
+  "clips": [
+    {
+      "path": "C:\\Projects\\AudBre\\benchmarks\\clips\\10s_test_input.wav",
+      "name": "10s_test_input.wav",
+      "duration_s": 10.0,
+      "frames": 480000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "format": "WAV",
+      "subtype": "PCM_16"
+    },
+    {
+      "path": "C:\\Projects\\AudBre\\benchmarks\\clips\\30s_synthetic.wav",
+      "name": "30s_synthetic.wav",
+      "duration_s": 30.0,
+      "frames": 1440000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "format": "WAV",
+      "subtype": "PCM_16"
+    },
+    {
+      "path": "C:\\Projects\\AudBre\\benchmarks\\clips\\60s_synthetic.wav",
+      "name": "60s_synthetic.wav",
+      "duration_s": 60.0,
+      "frames": 2880000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "format": "WAV",
+      "subtype": "PCM_16"
+    },
+    {
+      "path": "C:\\Projects\\AudBre\\benchmarks\\clips\\120s_synthetic.wav",
+      "name": "120s_synthetic.wav",
+      "duration_s": 120.0,
+      "frames": 5760000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "format": "WAV",
+      "subtype": "PCM_16"
+    },
+    {
+      "path": "C:\\Projects\\AudBre\\benchmarks\\clips\\300s_synthetic.wav",
+      "name": "300s_synthetic.wav",
+      "duration_s": 300.0,
+      "frames": 14400000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "format": "WAV",
+      "subtype": "PCM_16"
+    }
+  ],
+  "selected_backends": [
+    "local"
+  ],
+  "results": [
+    {
+      "clip_name": "10s_test_input.wav",
+      "clip_duration_s": 10.0,
+      "backend": "modal",
+      "chunks": null,
+      "planned_chunks": 1,
+      "status": "not_requested",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": null
+    },
+    {
+      "clip_name": "10s_test_input.wav",
+      "clip_duration_s": 10.0,
+      "backend": "local",
+      "chunks": null,
+      "planned_chunks": 1,
+      "status": "unavailable",
+      "warmup_time_s": 0.040879799999856914,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    },
+    {
+      "clip_name": "30s_synthetic.wav",
+      "clip_duration_s": 30.0,
+      "backend": "modal",
+      "chunks": null,
+      "planned_chunks": 1,
+      "status": "not_requested",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": null
+    },
+    {
+      "clip_name": "30s_synthetic.wav",
+      "clip_duration_s": 30.0,
+      "backend": "local",
+      "chunks": null,
+      "planned_chunks": 1,
+      "status": "not_run",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    },
+    {
+      "clip_name": "60s_synthetic.wav",
+      "clip_duration_s": 60.0,
+      "backend": "modal",
+      "chunks": null,
+      "planned_chunks": 3,
+      "status": "not_requested",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": null
+    },
+    {
+      "clip_name": "60s_synthetic.wav",
+      "clip_duration_s": 60.0,
+      "backend": "local",
+      "chunks": null,
+      "planned_chunks": 3,
+      "status": "not_run",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    },
+    {
+      "clip_name": "120s_synthetic.wav",
+      "clip_duration_s": 120.0,
+      "backend": "modal",
+      "chunks": null,
+      "planned_chunks": 5,
+      "status": "not_requested",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": null
+    },
+    {
+      "clip_name": "120s_synthetic.wav",
+      "clip_duration_s": 120.0,
+      "backend": "local",
+      "chunks": null,
+      "planned_chunks": 5,
+      "status": "not_run",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    },
+    {
+      "clip_name": "300s_synthetic.wav",
+      "clip_duration_s": 300.0,
+      "backend": "modal",
+      "chunks": null,
+      "planned_chunks": 11,
+      "status": "not_requested",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": null
+    },
+    {
+      "clip_name": "300s_synthetic.wav",
+      "clip_duration_s": 300.0,
+      "backend": "local",
+      "chunks": null,
+      "planned_chunks": 11,
+      "status": "not_run",
+      "warmup_time_s": null,
+      "cold_start_s": null,
+      "timed_run_s": [],
+      "timed_run_details": [],
+      "median_time_s": null,
+      "min_time_s": null,
+      "max_time_s": null,
+      "real_time_factor": null,
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    }
+  ],
+  "notes": [
+    "Modal was explicitly skipped for this run; no audio was sent.",
+    "The local backend could not complete its warm-up; subsequent local clips were not attempted.",
+    "The JSON also records planned_chunks from AudBre's chunk_bounds function; the table reports chunks processed only after a complete warm-up.",
+    "Cold-start time is the first Modal warm-up request; it is excluded from the three-run warm statistics."
+  ]
+}

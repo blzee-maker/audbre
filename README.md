@@ -34,6 +34,28 @@ Each layer stores the *signal that was taken out*, so muting one costs no GPU
 round-trip. Layers are still computed in sequence — each sees the output of the
 last — so a stack that's been toggled around can be re-rendered exactly.
 
+## Product case study
+
+**Problem hypothesis:** In an otherwise usable recording, one distracting
+sound can spoil a take. Broad noise removal may be the wrong tool when the goal
+is to remove one occurrence without changing the rest.
+
+**MVP bet:** Let someone describe the sound, mark when it happens, and preview
+the result before committing. The workflow supports uploading a recording,
+marking a span, comparing the original, cleaned audio and removed sound, then
+keeping, muting or exporting a removal.
+
+**Product choices:** A time anchor helps target one occurrence rather than every
+similar sound. Reversible removal layers make experimentation safe. Processing
+long recordings in overlapping chunks makes the workflow practical without
+requiring the entire file in GPU memory.
+
+**What I would validate next:** With editors using real recordings, measure
+successful-export rate and time to export, then ask them to rate whether wanted
+audio was preserved. Compare anchored and unanchored removals to test whether
+marking a span reduces unwanted changes. These are proposed measures; this
+prototype has not yet been validated with users or real-world quality studies.
+
 ## How it runs
 
 <p align="center">
@@ -137,6 +159,13 @@ input tensors cast to match.
 
 Reranking also costs memory: candidates run in parallel, so `separate()` uses
 2 candidates for an unanchored prompt and 1 when you have marked a span.
+
+The worker also builds the model **without its ImageBind visual ranker** — it
+asserts at import time and takes the container down with it. AudBre prompts with
+text and a marked span, never with video frames, so that ranker has nothing to
+rank; the cost is that prompting with an image is not available. It is stubbed
+with a monkeypatch, which wants to be a config-level opt-out
+([#4](https://github.com/blzee-maker/audbre/issues/4)).
 
 ## Deploying from Windows
 
